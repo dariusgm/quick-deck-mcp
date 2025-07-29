@@ -9,14 +9,13 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = "==3.13.0"
 dependencies = [
-  "modelcontextprotocol",
   "fastapi",
   "uvicorn[standard]",
   "pydantic",
   "openai", # or other Pandoc helpers if you integrate with pandoc
   "pandoc",
-  "mcp[cli]",
-  "dotenv>=0.9.9",
+  "mcp[cli]==1.12.2",
+  "dotenv",
 ]
 
 [build-system]

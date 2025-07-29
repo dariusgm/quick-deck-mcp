@@ -9,7 +9,7 @@ And you may need [rust](https://www.rust-lang.org/tools/install) to build some d
 uv venv --python=3.13 --seed
 . .venv/bin/activate
 uv sync
-
+```
 
 
 # Execute via Docker
@@ -20,7 +20,6 @@ docker run -it --rm -v $(pwd):/app -w /app
 # Running
 You can install this server in Claude Desktop and interact with it right away by running:
 ```bash
-
 uv run mcp install __main__.py
 ```
 Alternatively, you can test it with the MCP Inspector:
