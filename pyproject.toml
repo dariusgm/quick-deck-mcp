@@ -16,6 +16,8 @@ dependencies = [
   "pandoc",
   "mcp[cli]==1.12.2",
   "dotenv",
+  "pyright",
+  "loguru>=0.7.3",
 ]
 
 [build-system]
