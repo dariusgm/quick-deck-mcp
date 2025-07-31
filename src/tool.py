@@ -3,7 +3,7 @@ from loguru import logger
 
 from chatgpt import send_message
 from prompt import agenda, content
-def generate_agenda(settings: dict) -> list[str]:
+async def generate_agenda(settings: dict) -> list[str]:
     logger.info("Generating agenda with this settings: {} ", settings)
     agenda_prompt = agenda(settings)
     response = send_message(agenda_prompt).content
@@ -14,7 +14,7 @@ def generate_agenda(settings: dict) -> list[str]:
         return []
 
 
-def generate_content(settings: dict, agenda_elements: list[str]) -> list[dict]:
+async def generate_content(settings: dict, agenda_elements: list[str]) -> list[dict]:
     result = []
     for agenda_element in agenda_elements:
         logger.info("Generating Content for agenda element: {} ", agenda_element)
@@ -33,8 +33,6 @@ def generate_content(settings: dict, agenda_elements: list[str]) -> list[dict]:
             slide = {"content": paragraph, "title": agenda_element }
             result.append(slide)
     return result
-
-# Simulated export (pretend long-running)
 
 async def export_pdf(slides: list[str]) -> str:
     return "data:application/pdf;base64,..."  # Fake output

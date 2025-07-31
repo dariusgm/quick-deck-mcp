@@ -14,7 +14,6 @@ dependencies = [
   "pydantic",
   "openai", # or other Pandoc helpers if you integrate with pandoc
   "pandoc",
-  "mcp[cli]==1.12.2",
   "dotenv",
   "pyright",
   "loguru>=0.7.3",
