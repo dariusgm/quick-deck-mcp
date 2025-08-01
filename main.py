@@ -1,15 +1,10 @@
 from fastapi import FastAPI, Request
-from pydantic import BaseModel
-from fastapi.responses import JSONResponse
 import uvicorn
 import asyncio
-app = FastAPI()
+from src.types import InputAgenda
+import src.tool
 
-class InputAgenda(BaseModel):
-    topic: str
-    audience: str
-    style: str
-    language: str
+app = FastAPI()
 
 @app.post("/tools/call/generate_agenda")
 async def generate_agenda(request: Request):
@@ -19,10 +14,11 @@ async def generate_agenda(request: Request):
     arguments = params.get("arguments", {})
     input_agenda = InputAgenda(**arguments)
     id_ = req.get("id")
-    return {"jsonrpc": "2.0", "result": 200, "id": id_}
+    result = await src.tool.generate_agenda(input_agenda)
+    return {"jsonrpc": "2.0", "result": result, "id": id_}
 
 async def main():
-    config = uvicorn.Config("main:app", host="0.0.0.0", port=8000, log_level="info")
+    config = uvicorn.Config("main:app", host="0.0.0.0", port=9000, log_level="info")
     server = uvicorn.Server(config)
     await server.serve()
 

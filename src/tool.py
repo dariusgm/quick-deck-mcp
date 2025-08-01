@@ -3,7 +3,8 @@ from loguru import logger
 
 from chatgpt import send_message
 from prompt import agenda, content
-async def generate_agenda(settings: dict) -> list[str]:
+from src.types import InputAgenda
+async def generate_agenda(settings: InputAgenda) -> list[str]:
     logger.info("Generating agenda with this settings: {} ", settings)
     agenda_prompt = agenda(settings)
     response = send_message(agenda_prompt).content
@@ -14,7 +15,7 @@ async def generate_agenda(settings: dict) -> list[str]:
         return []
 
 
-async def generate_content(settings: dict, agenda_elements: list[str]) -> list[dict]:
+async def generate_content(settings: InputAgenda, agenda_elements: list[str]) -> list[dict]:
     result = []
     for agenda_element in agenda_elements:
         logger.info("Generating Content for agenda element: {} ", agenda_element)

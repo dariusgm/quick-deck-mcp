@@ -1,6 +1,9 @@
 from string import Template
 from loguru import logger
 
+from src.types import InputAgenda
+
+
 def send_template(developer_prompt: str, user_prompt: str) -> list[dict[str, str | list[dict[str, str]]]]:
     """
     Prepare the message to send to the OpenAI API.
@@ -29,7 +32,7 @@ def send_template(developer_prompt: str, user_prompt: str) -> list[dict[str, str
     }]
 
 
-def agenda(settings: dict) -> list[dict[str, str | list[dict[str, str]]]]:
+def agenda(settings: InputAgenda) -> list[dict[str, str | list[dict[str, str]]]]:
     developer_template = Template("""
        I want to to act as an expert in presentations for $style. 
        You will receive a topic of my choice and provide slides and speaker notes for me.
@@ -56,17 +59,17 @@ def agenda(settings: dict) -> list[dict[str, str | list[dict[str, str]]]]:
     The topic is about $topic and the audience is $audience. Use $language for the content.
     """)
 
-    developer = developer_template.substitute(style=settings.get('style'))
+    developer = developer_template.substitute(style=settings.style)
     user = user_template.substitute(
-        topic=settings.get('topic'),
-        audience=settings.get('audience'),
-        language=settings.get('language')
+        topic=settings.topic,
+        audience=settings.audience,
+        language=settings.language
     )
     logger.info("Agenda Prompt: {} {}", developer, user)
     return send_template(developer, user)
 
 
-def content(settings: dict, agenda: str) -> list[
+def content(settings: InputAgenda, agenda: str) -> list[
     dict[str, str | list[dict[str, str]]]]:
     developer_template = Template("""
       I want to to act as an expert in presentations for $style. 
@@ -93,12 +96,12 @@ def content(settings: dict, agenda: str) -> list[
     """)
 
 
-    developer = developer_template.substitute(style=settings.get('style'))
+    developer = developer_template.substitute(style=settings.style)
     user = user_template.substitute(
-        topic=settings.get('topic'),
-        audience=settings.get('audience'),
-        language=settings.get('language'),
-        style=settings.get('style'),
+        topic=settings.topic,
+        audience=settings.audience,
+        language=settings.language,
+        style=settings.style,
         header=agenda)
     logger.info("Content Prompt: {} {}", developer, user)
     return send_template(developer, user)
