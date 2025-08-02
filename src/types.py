@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class InputAgenda(BaseModel):
+class Settings(BaseModel):
     topic: str
     audience: str
     style: str

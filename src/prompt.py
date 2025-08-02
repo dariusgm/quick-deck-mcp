@@ -1,7 +1,7 @@
 from string import Template
 from loguru import logger
 
-from src.types import InputAgenda
+from src.types import Settings
 
 
 def send_template(developer_prompt: str, user_prompt: str) -> list[dict[str, str | list[dict[str, str]]]]:
@@ -32,7 +32,7 @@ def send_template(developer_prompt: str, user_prompt: str) -> list[dict[str, str
     }]
 
 
-def agenda(settings: InputAgenda) -> list[dict[str, str | list[dict[str, str]]]]:
+def agenda(settings: Settings) -> list[dict[str, str | list[dict[str, str]]]]:
     developer_template = Template("""
        I want to to act as an expert in presentations for $style. 
        You will receive a topic of my choice and provide slides and speaker notes for me.
@@ -65,11 +65,11 @@ def agenda(settings: InputAgenda) -> list[dict[str, str | list[dict[str, str]]]]
         audience=settings.audience,
         language=settings.language
     )
-    logger.info("Agenda Prompt: {} {}", developer, user)
+    logger.debug("Agenda Prompt: {} {}", developer, user)
     return send_template(developer, user)
 
 
-def content(settings: InputAgenda, agenda: str) -> list[
+def content(settings: Settings, agenda: str) -> list[
     dict[str, str | list[dict[str, str]]]]:
     developer_template = Template("""
       I want to to act as an expert in presentations for $style. 
@@ -103,5 +103,5 @@ def content(settings: InputAgenda, agenda: str) -> list[
         language=settings.language,
         style=settings.style,
         header=agenda)
-    logger.info("Content Prompt: {} {}", developer, user)
+    logger.debug("Content Prompt: {} {}", developer, user)
     return send_template(developer, user)
