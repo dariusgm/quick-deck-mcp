@@ -26,38 +26,35 @@ uvicorn main:app
 Make sure the server is running in sse mode:
 
 ```bash
-
-curl -X POST http://127.0.0.1:8000/tools/call/generate_agenda \
-  -H "Content-Type: application/json" \
-  -H "Accept: text/event-stream" \
-  -d '{
-    "jsonrpc": "2.0",
-    "params": {
-      "arguments":  {
-          "topic": "Git Introduction",
-          "audience": "Young IT Professionals",
-          "style": "Fun educational content",
-          "language": "English"
-        }
-      }
-    }'
+bash doc/generate_agenda.sh
 ```
 Example output:
-```json
-{
-  "result": [
-    "# Agenda for Git Introduction Presentation\n\n",
-    "\n\n## Understanding Git Basics: \n- Introduction to version control systems.\n- What Git is: Definition and key features.\n- The advantages of using Git for project collaboration.\n\n",
-    "\n\n## Git History and Evolution:\n- The origin of Git and its creator, Linus Torvalds.\n- Milestones in Git's development.\n- How Git has become a standard in software development.\n\n",
-    "\n\n## Core Git Concepts:\n- Repository: What it is and how it works.\n- Commits, branches, and merges: Basic terminology explained.\n- Local vs. remote repositories and their significance.\n\n",
-    "\n\n## Setting Up Git:\n- Overview of the installation process for different operating systems.\n- Configuring Git for first-time users.\n- Creating your first repository: A step-by-step guide.\n\n",
-    "\n\n## Basic Git Commands:\n- Introduction to essential Git commands: `git init`, `git clone`, `git add`, and `git commit`.\n- Understanding the Git workflow.\n- Practical examples of using commands in a project setting.\n\n",
-    "\n\n## Collaboration with Git:\n- Working with branches: How to create and manage them.\n- Pull requests: What they are and how to use them.\n- Resolving merge conflicts: Tips and techniques.\n\n",
-    "\n\n## Best Practices and Tips:\n- Writing meaningful commit messages.\n- Regularly pushing changes: Why it’s important.\n- Staying organized with branches and workflows.\n\n",
-    "\n\n## Resources for Further Learning:\n- Recommended books, websites, and tutorials for mastering Git.\n- Communities and forums for support and networking.\n- Opportunities for practical, real-world experience with Git. \n\n",
-    " \n\n## Q&A Session:\n- Open floor for questions and clarifications.\n- Discuss common challenges and solutions encountered when using Git."
-  ]
-}
+```markdown
+# Agenda for Git Introduction Presentation
+## Understanding Version Control: 
+- What is version control and why it matters for developers.
+- Benefits of managing code changes in collaborative environments.
+## The Basics of Git:  
+- Introduction to Git and its core functions.
+- Key concepts: repositories, commits, branches, and merges.
+## Setting Up Git: 
+- Steps to install Git on various platforms.
+- Configuring your Git environment: user information and preferences.
+## Common Git Commands: 
+- Overview of essential commands: `clone`, `add`, `commit`, `push`, and `pull`.
+- Practical examples of how to use these commands effectively.
+## Branching and Merging: 
+- Explanation of branches in Git and their significance in development.
+- How to create, switch, and merge branches.
+## Collaboration with Git: 
+- Working in teams using Git: pull requests and code reviews.
+- Integrating Git with platforms like GitHub and GitLab.
+## Best Practices and Tips: 
+- Recommended practices for commit messages and workflow strategies.
+- Common pitfalls to avoid when working with Git.
+## Resources for Further Learning: 
+- Suggestions for tutorials, books, and online courses to deepen your knowledge.
+- Community resources and where to ask for help when needed.
 ```
 
 # Example Usage for content generation with explicit agenda
@@ -66,30 +63,7 @@ This can than be passed to the `generate_content` endpoint to generate the conte
 When leaving out the agenda, a agenda will be generated based on the topic, audience, style, and language.
 
 ```bash
-curl -X POST http://127.0.0.1:8000/tools/call/generate_content \
-  -H "Content-Type: application/json" \
-  -H "Accept: text/event-stream" \
-  -d '{
-    "jsonrpc": "2.0",
-    "params": {
-      "arguments":  {
-          "topic": "Git Introduction",
-          "audience": "Young IT Professionals",
-          "style": "Fun educational content",
-          "language": "English",
-          "agenda": [
-            "Overview of Version Control Systems",
-            "Introduction to Git",
-            "Key Features of Git",
-            "Installing Git",
-            "Basic Git Commands",
-            "Branching and Merging in Git",
-            "Working with Remote Repositories",
-            "Best Practices for Using Git",
-            "Q&A Session"
-          ]
-        }
-      }
-    }'
+bash doc/generate_content_plain.sh
+
 
 ```

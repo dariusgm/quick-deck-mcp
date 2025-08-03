@@ -5,33 +5,22 @@ from loguru import logger
 
 from chatgpt import send_message
 from prompt import agenda, content
-from src.types import Settings
-async def generate_agenda(settings: Settings) -> list[str]:
+from src.app_types import Settings
+async def generate_agenda(settings: Settings) -> AsyncGenerator[str, None]:
     logger.info("Generating agenda with this settings: {} ", settings)
     agenda_prompt = agenda(settings)
-    response = send_message(agenda_prompt).content
-    if response:
-        result = response.split("---")
-        return result
-    else:
-        return []
+    async for chunk in send_message(agenda_prompt):
+        yield chunk
 
 
-async def generate_content(settings: Settings, agenda_element: str) -> list[str]:
-    result = []
+
+async def generate_content(settings: Settings, agenda_element: str) -> AsyncGenerator[str, None]:
     logger.info("Generating Content for agenda element: {} ", agenda_element)
     content_prompt = content(settings, agenda_element)
-    response = send_message(content_prompt).content
-    for paragraph in response.split("---"):
-        paragraph = paragraph.strip()
-        if paragraph.strip() == "":
-            continue
+    async for chunk in send_message(content_prompt):
+        yield chunk
 
-        if paragraph.startswith("-"):
-            paragraph = paragraph[1:]
 
-        result.append(paragraph)
-    return result
 
 
 async def export_pdf(slides: list[str]) -> str:

@@ -1,7 +1,7 @@
 from string import Template
 from loguru import logger
 
-from src.types import Settings
+from src.app_types import Settings
 
 
 def send_template(developer_prompt: str, user_prompt: str) -> list[dict[str, str | list[dict[str, str]]]]:
