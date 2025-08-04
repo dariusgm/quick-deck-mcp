@@ -42,18 +42,18 @@ Using version control offers numerous benefits, such as keeping track of every m
 ```
 
 ```bash
-curl -X POST http://127.0.0.1:8000/tools/call/export  -F "file=@git.md" | jq .job_id > job_id.txt
+curl -X POST http://127.0.0.1:8000/tools/call/export  -F "file=@git.md" | jq '.job_id' > job_id.txt
 ```
 The above command will return a job ID, which you can use to check the status of the export job.
 Using curl, you can get the status, while its running (or any error)
 
 ```bash
-curl -X GET http://127.0.0.1:8000/tools/call/export_status?job_id=f4f6c37728c8ad321f05de1d4d026867f59bc28eec52777f1f485df7c975208d
+curl -X GET http://127.0.0.1:8000/tools/call/export_status?job_id=$(cat job_id.txt | sed 's/"//g') 
 ```
 
 Once the job is completed, you can download the PDF file using the job ID:
 
 ```bash
-curl -X GET http://127.0.0.1:8000/tools/call/export?job_id=f4f6c37728c8ad321f05de1d4d026867f59bc28eec52777f1f485df7c975208d
+curl -X GET http://127.0.0.1:8000/tools/call/export?job_id=$(cat job_id.txt | sed 's/"//g') -o git.pdf
 ```
 
