@@ -206,3 +206,4 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 quick_deck_mcp.egg-info
+tmp
