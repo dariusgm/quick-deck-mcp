@@ -71,7 +71,7 @@ async def get_export(request: Request) -> StreamingResponse:
     return StreamingResponse(status_code=404, content={"error": "job_id not found"})
 
 @app.get("/tools/call/export_status")
-async def export_status(request: Request) -> StreamingResponse:
+async def export_status(request: Request) -> JSONResponse:
     """
     Endpoint to get the export file.
     This fetches the export file content.
@@ -80,18 +80,18 @@ async def export_status(request: Request) -> StreamingResponse:
     """
     job_id = request.query_params.get("job_id")
     if not job_id:
-        return StreamingResponse(status_code=400, content={"error": "job_id is required"})
+        return JSONResponse(status_code=400, content={"error": "job_id is required"})
     logger.info(f"Fetching status for job_id: {job_id}")
     status_file = os.path.join(TEMP_DIR, f"{job_id}.json")
     if os.path.exists(status_file):
         async with aiofiles.open(status_file, "rt") as f:
             status_content = await f.read()
-            return StreamingResponse(
+            return JSONResponse(
                 content=json.loads(status_content),
                 media_type="application/json"
                 )
 
-    return StreamingResponse(status_code=404, content={"error": "job_id not found"})
+    return JSONResponse(status_code=404, content={"error": "job_id not found"})
 
 
 
