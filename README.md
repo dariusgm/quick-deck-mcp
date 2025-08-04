@@ -40,6 +40,8 @@ Here are the commands for Debian-based systems (like Ubuntu):
 ```bash
 # Required for pdf generation
 sudo apt-get install -y texlive-latex-base texlive-latex-recommended
+# Required for converting markdown to something else
+sudo apt-get install -y pandoc
 ```
 
 # Doc
