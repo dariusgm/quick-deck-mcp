@@ -11,6 +11,11 @@ uv venv --python=3.13 --seed
 uv sync
 ```
 
+# Installation System Dependencies
+```bash
+# Required for pdf generation
+sudo apt-get install -y texlive-latex-base texlive-latex-recommended
+```
 
 # Execute via Docker
 ```bash

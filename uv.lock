@@ -297,6 +297,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pypandoc"
+version = "1.15"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/e1/88/26e650d053df5f3874aa3c05901a14166ce3271f58bfe114fd776987efbd/pypandoc-1.15.tar.gz", hash = "sha256:ea25beebe712ae41d63f7410c08741a3cab0e420f6703f95bc9b3a749192ce13", size = 32940 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/61/06/0763e0ccc81754d3eadb21b2cb86cf21bdedc9b52698c2ad6785db7f0a4e/pypandoc-1.15-py3-none-any.whl", hash = "sha256:4ededcc76c8770f27aaca6dff47724578428eca84212a31479403a9731fc2b16", size = 21321 },
+]
+
+[[package]]
 name = "pyright"
 version = "1.1.403"
 source = { registry = "https://pypi.org/simple" }
@@ -366,6 +375,7 @@ dependencies = [
     { name = "openai" },
     { name = "pandoc" },
     { name = "pydantic" },
+    { name = "pypandoc" },
     { name = "pyright" },
     { name = "python-multipart" },
     { name = "uvicorn", extra = ["standard"] },
@@ -380,6 +390,7 @@ requires-dist = [
     { name = "openai" },
     { name = "pandoc" },
     { name = "pydantic" },
+    { name = "pypandoc", specifier = ">=1.15" },
     { name = "pyright" },
     { name = "python-multipart", specifier = ">=0.0.20" },
     { name = "uvicorn", extras = ["standard"] },
