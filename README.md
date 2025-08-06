@@ -167,8 +167,26 @@ You will get a HTTP response with 202, which means that the job is accepted and 
 The response is a JSON object with the job id.
 You need to use this job id to check the status of the export job and to download the PDF file once it is completed.
 But first, we need to trigger the export tool using the previously generated Markdown file `git.md`.
+When providing no "Accept" header, the server will trigger a PDF export by default.
+Other formats are implemented by pandoc but not yet fully tested. Feedback is welcome.
+
+| MIME-Type in Accept Header                                                | Format |
+|---------------------------------------------------------------------------|--------|
+| application/pdf (default)                                                 | pdf    |
+| text/html (reveal_js)                                                     | html   |
+| application/vnd.openxmlformats-officedocument.wordprocessingml.document   | docx   |
+| application/vnd.openxmlformats-officedocument.presentationml.presentation | pptx   |
+| application/msword                                                        | doc    |
+| application/vnd.ms-powerpoint                                             | ppt    |
+| text/markdown                                                             | md     |
+| application/x-latex                                                       | tex    |
+| application/rtf                                                           | rtf    |
+| application/vnd.oasis.opendocument.text                                   | odt    |
+| application/epub+zip                                                      | epub   |
+| text/plain                                                                | txt    |
+
 ```bash
-curl -X POST http://127.0.0.1:8000/tools/call/export  -F "file=@git.md" | jq '.job_id' > job_id.txt
+curl -X POST http://127.0.0.1:8000/tools/call/export -H "Accept: text/html" -F "file=@git.md" | jq '.job_id' > job_id.txt
 ```
 
 

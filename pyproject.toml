@@ -20,6 +20,7 @@ dependencies = [
   "aiofiles>=24.1.0",
   "python-multipart>=0.0.20",
   "pypandoc>=1.15",
+  "markdown>=3.8.2",
 ]
 
 [build-system]
