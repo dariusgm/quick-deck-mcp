@@ -21,6 +21,8 @@ dependencies = [
   "python-multipart>=0.0.20",
   "pypandoc>=1.15",
   "markdown>=3.8.2",
+  "pytest>=8.4.1",
+  "pytest-asyncio>=1.1.0",
 ]
 
 [build-system]

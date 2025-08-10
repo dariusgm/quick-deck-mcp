@@ -92,7 +92,9 @@ def content(settings: Settings, agenda: str) -> list[
     """)
 
     user_template = Template("""
-    Topic is "$header" in the Context of "$topic". Use "$language" as language and in the style of "$style" for the "$audience" audience.
+    Topic is "$header" in the Context of "$topic". 
+    Use "$language" as language for your response.
+    Use the style "$style" and target the audience "$audience".
     """)
 
 
