@@ -7,7 +7,6 @@ from app_types import Settings
 async def agenda_generator(input_agenda: Settings):
     """
     Generator function to yield agenda items.
-    This simulates a long-running process.
     """
     logger.debug("Generating agenda with settings: {}", input_agenda)
     async for item in src.tool.generate_agenda(input_agenda):
@@ -16,8 +15,6 @@ async def agenda_generator(input_agenda: Settings):
 
 async def generate_content_generator(settings: Settings, agenda_elements: list[str]):
     """
-    Generator function to yield content for each agenda element.
-    This simulates a long-running process.
     """
     if len(agenda_elements) == 0:
         logger.info(f"No agenda elements found for {settings}")
