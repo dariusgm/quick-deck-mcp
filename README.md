@@ -170,20 +170,20 @@ But first, we need to trigger the export tool using the previously generated Mar
 When providing no "Accept" header, the server will trigger a PDF export by default.
 Other formats are implemented by pandoc but not yet fully tested. Feedback is welcome.
 
-| MIME-Type in Accept Header                                                | Format |
-|---------------------------------------------------------------------------|--------|
-| application/pdf (default)                                                 | pdf    |
-| text/html (reveal_js)                                                     | html   |
-| application/vnd.openxmlformats-officedocument.wordprocessingml.document   | docx   |
-| application/vnd.openxmlformats-officedocument.presentationml.presentation | pptx   |
-| application/msword                                                        | doc    |
-| application/vnd.ms-powerpoint                                             | ppt    |
-| text/markdown                                                             | md     |
-| application/x-latex                                                       | tex    |
-| application/rtf                                                           | rtf    |
-| application/vnd.oasis.opendocument.text                                   | odt    |
-| application/epub+zip                                                      | epub   |
-| text/plain                                                                | txt    |
+| MIME-Type in Accept Header                                                | Format | Supported? |
+|---------------------------------------------------------------------------|--------|------------|
+| application/pdf (default)                                                 | pdf    | Yes        |
+| text/html (reveal_js)                                                     | html   | Yes        |
+| application/vnd.openxmlformats-officedocument.wordprocessingml.document   | docx   | No         |
+| application/vnd.openxmlformats-officedocument.presentationml.presentation | pptx   | Yes        |
+| application/msword                                                        | doc    | No         |
+| application/vnd.ms-powerpoint                                             | ppt    | No         |
+| text/markdown                                                             | md     | Yes        |
+| application/x-latex                                                       | tex    | Yes        |
+| application/rtf                                                           | rtf    | Yes        |
+| application/vnd.oasis.opendocument.text                                   | odt    | No         |
+| application/epub+zip                                                      | epub   | No         |
+| text/plain                                                                | txt    | Yes        |
 
 ```bash
 curl -X POST http://127.0.0.1:8000/tools/call/export -H "Accept: text/html" -F "file=@git.md" | jq '.job_id' > job_id.txt

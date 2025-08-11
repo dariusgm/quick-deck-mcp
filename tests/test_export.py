@@ -28,10 +28,15 @@ def setup_markdown_file(request):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("setup_markdown_file,export_format", [
-    ("test_rtf", "rtf"),
-    ("test_pptx", "pptx"),
+    ("test_pdf", "pdf"),
     ("test_html", "html"),
-    ("test_pdf", "pdf")], indirect=["setup_markdown_file"])
+    ("test_pptx", "pptx"),
+    ("test_markdown", "md"),
+    ("test_tex", "tex"),
+    ("test_rtf", "rtf"),
+    ("test_txt", "txt")
+
+], indirect=["setup_markdown_file"])
 async def test_export(setup_markdown_file, export_format):
     await export(setup_markdown_file, export_format=export_format)
     assert os.path.exists(os.path.join(TEMP_DIR, f"{setup_markdown_file}.{export_format}"))

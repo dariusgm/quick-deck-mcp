@@ -156,7 +156,6 @@ async def export_pptx(job_id: str):
         pypandoc.convert_file(source_file=markdown_clean_file, outputfile=target_path, format='md', to=export_format)
 
 async def export_pdf(job_id: str):
-
     markdown_file = os.path.join(TEMP_DIR, f"{job_id}.md")
     markdown_clean_file = os.path.join(TEMP_DIR, f"{job_id}_clean.md")
     export_format = "pdf"
@@ -176,6 +175,39 @@ async def export_pdf(job_id: str):
         # convert the markdown to pdf
         pypandoc.convert_file(source_file=markdown_clean_file, outputfile=target_path, format='md', to=export_format)
 
+async def export_md(job_id: str):
+    """
+    Asynchronously export the markdown file to md format.
+    As this is the default import format, there is not that much to do here.
+    """
+
+    pass
+
+async def export_txt(job_id: str):
+    markdown_file = os.path.join(TEMP_DIR, f"{job_id}.md")
+    export_format = "txt"
+    target_path = os.path.join(TEMP_DIR, f"{job_id}.{export_format}")
+
+    # convert the markdown to txt
+    pypandoc.convert_file(source_file=markdown_file, outputfile=target_path, format='md', to='plain')
+
+async def export_tex(job_id: str):
+    markdown_file = os.path.join(TEMP_DIR, f"{job_id}.md")
+    markdown_clean_file = os.path.join(TEMP_DIR, f"{job_id}_clean.md")
+    export_format = "tex"
+    target_path = os.path.join(TEMP_DIR, f"{job_id}.{export_format}")
+
+    # Read the markdown content
+    async with aiofiles.open(markdown_file, "rt") as f:
+        markdown_content = await f.read()
+        markdown_content = markdown_content.replace("---", "\n---\n")
+
+        # Write the cleaned markdown content to a temporary file
+        async with aiofiles.open(markdown_clean_file, "wt") as outfile_handle:
+            await outfile_handle.write(markdown_content)
+
+        # Convert the cleaned markdown file to tex format
+        pypandoc.convert_file(source_file=markdown_clean_file, outputfile=target_path, format='md', to='latex')
 
 async def export(job_id: str, export_format: str):
     # Update status
@@ -192,6 +224,15 @@ async def export(job_id: str, export_format: str):
             await export_pdf(job_id)
         case "pptx":
             await export_pptx(job_id)
+        case "txt":
+            await export_txt(job_id)
+        case "md":
+            await export_md(job_id)
+        case "tex":
+            await export_tex(job_id)
+        case _:
+            await write_status(status_file, {"status": "error", "start": start_time, "end": time.time(), "export_format": export_format, "error": f"Unsupported export format."})
+
 
     await write_status(status_file, {"status": "done", "start": start_time, "end": time.time(), "export_format": export_format})
 
