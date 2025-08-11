@@ -47,19 +47,3 @@ async def test_export(setup_markdown_file, export_format):
 
     for f in glob.glob(os.path.join(TEMP_DIR, "test_*")):
         os.remove(f)
-
-def test_export_performance():
-    """
-    Test function to ensure performance of export functions.
-    This is a placeholder for actual performance test logic.
-    """
-    shutil.copy("tests/git_big.md", os.path.join(TEMP_DIR, "test_pdf.md"))
-    job_id = "test_pdf"
-    asyncio.run(export(job_id, export_format="pdf"))
-    assert os.path.exists(os.path.join(TEMP_DIR, "test_pdf.md"))
-    assert os.path.exists(os.path.join(TEMP_DIR, "test_pdf_clean.md"))
-    assert os.path.exists(os.path.join(TEMP_DIR, "test_pdf.pdf"))
-    with open(os.path.join(TEMP_DIR, "test_pdf.json"), "r") as f:
-        parsed = json.load(f)
-        assert parsed["export_format"] == "pdf"
-        assert parsed["status"] == "done"

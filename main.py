@@ -16,6 +16,15 @@ app = FastAPI()
 from src.global_settings import TEMP_DIR
 from loguru import logger
 
+@app.get("/healthz")
+async def health_check() -> JSONResponse:
+    """
+    Health check endpoint to verify if the service is running.
+    :return: A JSON response indicating the service is healthy.
+    :rtype: JSONResponse
+    """
+    return JSONResponse(content={"status": "healthy"}, status_code=200)
+
 @app.post("/tools/call/generate_agenda")
 async def generate_agenda(request: Request) -> StreamingResponse:
     """
